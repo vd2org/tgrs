@@ -28,8 +28,8 @@ impl InlineKeyboardMarkup {
     }
 }
 
-impl Into<ReplyMarkup> for InlineKeyboardMarkup {
-    fn into(self) -> ReplyMarkup {
-        ReplyMarkup::InlineKeyboardMarkup(self)
+impl From<InlineKeyboardMarkup> for ReplyMarkup {
+    fn from(v: InlineKeyboardMarkup) -> Self {
+        ReplyMarkup::InlineKeyboardMarkup(v)
     }
 }
