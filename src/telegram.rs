@@ -1,27 +1,27 @@
 use crate::*;
 use log::trace;
-use reqwest::{Client as RequestClient, Error as RequestError};
+use reqwest::{Client as ReqwestClient, Error as ReqwestError};
 use std::fmt::Debug;
 use std::time::Duration;
 
 #[derive(Clone, Debug)]
 pub struct Telegram {
-    client: RequestClient,
+    client: ReqwestClient,
     token: String,
 }
 
 impl Telegram {
-    pub fn new(token: impl Into<String>) -> Self {
-        Self {
-            client: RequestClient::builder()
-                .timeout(Duration::from_secs(10))
-                .build()
-                .unwrap(),
+    pub fn new(token: impl Into<String>) -> Result<Self, ReqwestError> {
+        let client = ReqwestClient::builder()
+            .timeout(Duration::from_secs(10))
+            .build()?;
+        Ok(Self {
+            client,
             token: token.into(),
-        }
+        })
     }
 
-    pub async fn call_raw<T>(self: &Self, payload: &T) -> Result<Response, RequestError>
+    pub async fn call_raw<T>(self: &Self, payload: &T) -> Result<Response, ReqwestError>
     where
         T: TelegramRequest,
     {

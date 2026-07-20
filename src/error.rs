@@ -1,5 +1,5 @@
 use crate::*;
-use reqwest::Error as RequestError;
+use reqwest::Error as ReqwestError;
 use std::error::Error;
 use std::fmt;
 use std::fmt::Display;
@@ -8,7 +8,7 @@ use std::fmt::Display;
 pub enum TelegramError {
     Api(ErrResponse),
     Type(TelegramResult),
-    Network(RequestError),
+    Network(ReqwestError),
 }
 
 impl Display for TelegramError {
@@ -21,8 +21,8 @@ impl Display for TelegramError {
     }
 }
 
-impl From<RequestError> for TelegramError {
-    fn from(e: RequestError) -> Self {
+impl From<ReqwestError> for TelegramError {
+    fn from(e: ReqwestError) -> Self {
         TelegramError::Network(e)
     }
 }
