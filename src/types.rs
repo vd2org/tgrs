@@ -9,7 +9,7 @@ pub trait TelegramRequest: Serialize + Send + Clone + Debug {
 
 pub trait TelegramRequestResponse<R: TelegramResponse>: Serialize + Debug + Send + Clone {
     #[inline]
-    fn send(&self, telegram: &Telegram) -> impl Future<Output = Result<R, TelegramError>>
+    fn send(&self, telegram: &Telegram) -> impl Future<Output=Result<R, TelegramError>>
     where
         Self: TelegramRequest,
     {
@@ -17,4 +17,4 @@ pub trait TelegramRequestResponse<R: TelegramResponse>: Serialize + Debug + Send
     }
 }
 
-pub trait TelegramResponse: TryFrom<TelegramResult, Error = TelegramError> {}
+pub trait TelegramResponse: TryFrom<TelegramResult, Error=TelegramError> {}
