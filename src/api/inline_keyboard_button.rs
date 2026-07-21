@@ -6,7 +6,10 @@ use serde::Serialize;
 #[builder(derive(Clone, Debug), on(String, into))]
 pub struct InlineKeyboardButton {
     pub text: String,
-    pub callback_data: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub callback_data: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub style: Option<ButtonStyle>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub copy_text: Option<CopyTextButton>,
 }
