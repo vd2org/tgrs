@@ -18,9 +18,7 @@ pub struct AnswerCallbackQuery {
 
 impl AnswerCallbackQuery {
     pub fn simple(id: impl Into<String>) -> Self {
-        Self {
-            callback_query_id: id.into(),
-        }
+        Self { callback_query_id: id.into() }
     }
 }
 

@@ -11,14 +11,14 @@ pub struct InlineKeyboardMarkup {
 impl InlineKeyboardMarkup {
     pub fn row<I>(buttons: I) -> Self
     where
-        I: IntoIterator<Item=InlineKeyboardButton>,
+        I: IntoIterator<Item = InlineKeyboardButton>,
     {
         Self::builder().inline_keyboard(vec![buttons.into_iter().collect()]).build()
     }
 
     pub fn column<I>(buttons: I) -> Self
     where
-        I: IntoIterator<Item=InlineKeyboardButton>,
+        I: IntoIterator<Item = InlineKeyboardButton>,
     {
         Self::builder().inline_keyboard(buttons.into_iter().map(|b| vec![b]).collect()).build()
     }
