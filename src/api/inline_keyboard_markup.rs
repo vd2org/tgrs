@@ -13,14 +13,18 @@ impl InlineKeyboardMarkup {
     where
         I: IntoIterator<Item = InlineKeyboardButton>,
     {
-        Self::builder().inline_keyboard(vec![buttons.into_iter().collect()]).build()
+        Self::builder()
+            .inline_keyboard(vec![buttons.into_iter().collect()])
+            .build()
     }
 
     pub fn column<I>(buttons: I) -> Self
     where
         I: IntoIterator<Item = InlineKeyboardButton>,
     {
-        Self::builder().inline_keyboard(buttons.into_iter().map(|b| vec![b]).collect()).build()
+        Self::builder()
+            .inline_keyboard(buttons.into_iter().map(|b| vec![b]).collect())
+            .build()
     }
 
     pub fn rows<I>(buttons: I, buttons_per_row: usize) -> Self
@@ -31,7 +35,10 @@ impl InlineKeyboardMarkup {
 
         let mut rows = Vec::new();
         for button in buttons {
-            if rows.last().is_none_or(|row: &Vec<InlineKeyboardButton>| row.len() == buttons_per_row) {
+            if rows
+                .last()
+                .is_none_or(|row: &Vec<InlineKeyboardButton>| row.len() == buttons_per_row)
+            {
                 rows.push(Vec::with_capacity(buttons_per_row));
             }
             rows.last_mut().unwrap().push(button);

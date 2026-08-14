@@ -21,8 +21,13 @@ impl Debug for Telegram {
 
 impl Telegram {
     pub fn new(token: impl Into<String>) -> Result<Self, ReqwestError> {
-        let client = ReqwestClient::builder().timeout(Duration::from_secs(10)).build()?;
-        Ok(Self { client, token: token.into() })
+        let client = ReqwestClient::builder()
+            .timeout(Duration::from_secs(10))
+            .build()?;
+        Ok(Self {
+            client,
+            token: token.into(),
+        })
     }
 
     pub async fn call_raw<T>(&self, payload: &T) -> Result<Response, ReqwestError>
