@@ -25,7 +25,7 @@ impl Telegram {
         Ok(Self { client, token: token.into() })
     }
 
-    pub async fn call_raw<T>(self: &Self, payload: &T) -> Result<Response, ReqwestError>
+    pub async fn call_raw<T>(&self, payload: &T) -> Result<Response, ReqwestError>
     where
         T: TelegramRequest,
     {
@@ -51,7 +51,7 @@ impl Telegram {
         Ok(api_response)
     }
 
-    pub async fn send<R, T>(self: &Self, payload: &T) -> Result<R, TelegramError>
+    pub async fn send<R, T>(&self, payload: &T) -> Result<R, TelegramError>
     where
         T: TelegramRequest + TelegramRequestResponse<R>,
         R: TelegramResponse,
