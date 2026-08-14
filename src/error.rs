@@ -4,9 +4,13 @@ use std::error::Error;
 use std::fmt;
 use std::fmt::Display;
 
+/// An error returned while executing a Telegram request.
 pub enum TelegramError {
+    /// Telegram rejected the request.
     Api(ErrResponse),
+    /// The result did not match the response type selected by the caller.
     Type(TelegramResult),
+    /// Sending or decoding the HTTP response failed.
     Network(ReqwestError),
 }
 

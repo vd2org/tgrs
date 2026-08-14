@@ -2,6 +2,7 @@
 name = "tgrs"
 version = "0.1.0"
 edition = "2024"
+description = "A minimal typed asynchronous client for the Telegram Bot API"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/vd2org/tgrs"
 readme = "README.md"

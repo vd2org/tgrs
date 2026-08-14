@@ -3,9 +3,13 @@ use serde::Deserialize;
 
 #[derive(Deserialize, Debug, Clone)]
 #[serde(untagged)]
+/// A successful result type currently supported by the crate.
 pub enum TelegramResult {
+    /// A Boolean result.
     Bool(bool),
+    /// A message result.
     Message(Message),
+    /// A user or bot result.
     User(User),
 }
 

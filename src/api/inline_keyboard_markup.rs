@@ -4,11 +4,14 @@ use serde::Serialize;
 
 #[derive(Builder, Serialize, Debug, Clone)]
 #[builder(derive(Clone, Debug), on(String, into))]
+/// An inline keyboard arranged as rows of buttons.
 pub struct InlineKeyboardMarkup {
+    /// The keyboard rows, from top to bottom.
     pub inline_keyboard: Vec<Vec<InlineKeyboardButton>>,
 }
 
 impl InlineKeyboardMarkup {
+    /// Creates a keyboard containing one row.
     pub fn row<I>(buttons: I) -> Self
     where
         I: IntoIterator<Item = InlineKeyboardButton>,
@@ -18,6 +21,7 @@ impl InlineKeyboardMarkup {
             .build()
     }
 
+    /// Creates a keyboard containing one button per row.
     pub fn column<I>(buttons: I) -> Self
     where
         I: IntoIterator<Item = InlineKeyboardButton>,
@@ -27,6 +31,11 @@ impl InlineKeyboardMarkup {
             .build()
     }
 
+    /// Groups buttons into rows containing at most `buttons_per_row` buttons.
+    ///
+    /// # Panics
+    ///
+    /// Panics if `buttons_per_row` is zero.
     pub fn rows<I>(buttons: I, buttons_per_row: usize) -> Self
     where
         I: IntoIterator<Item = InlineKeyboardButton>,

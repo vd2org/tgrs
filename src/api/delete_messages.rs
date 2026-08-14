@@ -4,8 +4,11 @@ use serde::Serialize;
 
 #[derive(Builder, Serialize, Debug, Clone)]
 #[builder(derive(Clone, Debug), on(String, into))]
+/// A request to delete multiple messages from a chat.
 pub struct DeleteMessages {
+    /// The target chat identifier.
     pub chat_id: i64,
+    /// The identifiers of messages to delete.
     pub message_ids: Vec<u64>,
     // #[serde(skip_serializing_if = "Option::is_none")]
     // pub text: Option<String>,
