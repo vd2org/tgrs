@@ -7,12 +7,9 @@ pub trait TelegramRequest: Serialize + Send + Clone + Debug {
     const METHOD: &'static str;
 }
 
-pub trait TelegramRequestResponse<R: TelegramResponse>: Serialize + Debug + Send + Clone {
+pub trait TelegramRequestResponse<R: TelegramResponse>: TelegramRequest {
     #[inline]
-    fn send(&self, telegram: &Telegram) -> impl Future<Output = Result<R, TelegramError>>
-    where
-        Self: TelegramRequest,
-    {
+    fn send(&self, telegram: &Telegram) -> impl Future<Output = Result<R, TelegramError>> {
         telegram.send(self)
     }
 }

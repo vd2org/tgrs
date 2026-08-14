@@ -53,7 +53,7 @@ impl Telegram {
 
     pub async fn send<R, T>(&self, payload: &T) -> Result<R, TelegramError>
     where
-        T: TelegramRequest + TelegramRequestResponse<R>,
+        T: TelegramRequestResponse<R>,
         R: TelegramResponse,
     {
         match self.call_raw(payload).await {
