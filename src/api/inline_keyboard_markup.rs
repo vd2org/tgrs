@@ -22,6 +22,23 @@ impl InlineKeyboardMarkup {
     {
         Self::builder().inline_keyboard(buttons.into_iter().map(|b| vec![b]).collect()).build()
     }
+
+    pub fn rows<I>(buttons: I, buttons_per_row: usize) -> Self
+    where
+        I: IntoIterator<Item = InlineKeyboardButton>,
+    {
+        assert!(buttons_per_row > 0);
+
+        let mut rows = Vec::new();
+        for button in buttons {
+            if rows.last().is_none_or(|row: &Vec<InlineKeyboardButton>| row.len() == buttons_per_row) {
+                rows.push(Vec::with_capacity(buttons_per_row));
+            }
+            rows.last_mut().unwrap().push(button);
+        }
+
+        Self::builder().inline_keyboard(rows).build()
+    }
 }
 
 impl From<Vec<Vec<InlineKeyboardButton>>> for InlineKeyboardMarkup {
