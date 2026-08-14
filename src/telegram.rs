@@ -1,13 +1,22 @@
 use crate::*;
 use log::trace;
 use reqwest::{Client as ReqwestClient, Error as ReqwestError};
-use std::fmt::Debug;
+use std::fmt::{self, Debug};
 use std::time::Duration;
 
-#[derive(Clone, Debug)]
+#[derive(Clone)]
 pub struct Telegram {
     client: ReqwestClient,
     token: String,
+}
+
+impl Debug for Telegram {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("Telegram")
+            .field("client", &self.client)
+            .field("token", &"[REDACTED]")
+            .finish()
+    }
 }
 
 impl Telegram {
@@ -24,9 +33,18 @@ impl Telegram {
 
         let url = format!("https://api.telegram.org/bot{}/{}", self.token, T::METHOD);
 
-        let http_response = self.client.post(&url).json(&payload).send().await?;
+        let http_response = self
+            .client
+            .post(&url)
+            .json(&payload)
+            .send()
+            .await
+            .map_err(ReqwestError::without_url)?;
 
-        let api_response: Response = http_response.json().await?;
+        let api_response: Response = http_response
+            .json()
+            .await
+            .map_err(ReqwestError::without_url)?;
 
         trace!("Received response for {}: {:?}", T::METHOD, api_response);
 
@@ -41,7 +59,7 @@ impl Telegram {
         match self.call_raw(payload).await {
             Ok(Response::Ok(response)) => R::try_from(response.result),
             Ok(Response::Err(response)) => Err(TelegramError::Api(response)),
-            Err(e) => Err(TelegramError::Network(e)),
+            Err(e) => Err(e.into()),
         }
     }
 }
