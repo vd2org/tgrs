@@ -2,11 +2,15 @@
 name = "tgrs"
 version = "0.1.0"
 edition = "2024"
-
 license = "MIT OR Apache-2.0"
+repository = "https://github.com/vd2org/tgrs"
+readme = "README.md"
+keywords = ["telegram", "telegram-bot", "bot", "api", "async"]
+categories = ["api-bindings", "web-programming", "asynchronous"]
+exclude = [".github/*"]
 
 [dependencies]
 log = "0.4.33"
 reqwest = { version = "0.13.4", features = ["json"] }
-serde = { version = "1.0.228", features = ["derive"] }
+serde = { version = "1.0.229", features = ["derive"] }
 bon = "3.9.3"
